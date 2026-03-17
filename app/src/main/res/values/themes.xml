@@ -1,8 +1,25 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
     <style name="Base.Theme.SmartCampusApp" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <!-- TANIT Brand Colors -->
+        <item name="colorPrimary">@color/tanit_teal</item>
+        <item name="colorOnPrimary">@color/bg_dark</item>
+        <item name="colorPrimaryContainer">@color/tanit_teal_20</item>
+        <item name="colorSecondary">@color/tanit_cyan</item>
+        <item name="colorOnSecondary">@color/bg_dark</item>
+        <item name="colorError">@color/tanit_red</item>
+
+        <!-- Surface / Background -->
+        <item name="android:colorBackground">@color/bg_dark</item>
+        <item name="colorSurface">@color/surface_dark</item>
+        <item name="colorSurfaceVariant">@color/surface_elevated</item>
+        <item name="colorOnSurface">@color/text_primary</item>
+        <item name="colorOnSurfaceVariant">@color/text_secondary</item>
+        <item name="colorOutline">@color/divider</item>
+
+        <!-- Status bar -->
+        <item name="android:statusBarColor">@color/bg_dark</item>
+        <item name="android:navigationBarColor">@color/bg_dark</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="23">false</item>
     </style>
 
     <style name="Theme.SmartCampusApp" parent="Base.Theme.SmartCampusApp" />

@@ -2,33 +2,41 @@
     {
         "id": 1,
         "type": "water_risk",
-        "classroom": "17",
-        "new_room": "9",
-        "message": "Classroom 17 may experience water intrusion.",
-        "instructions": "Please remove electrical devices and move any valuable materials."
+        "severity": "high",
+        "classroom": "Salle 17",
+        "new_room": "Salle 9",
+        "message": "Risque élevé d'intrusion d'eau détecté en Salle 17. Niveau de saturation du sol à 78%.",
+        "instructions": "Veuillez retirer les appareils électriques et déplacer tout matériel de valeur.",
+        "timestamp": "Il y a 12 min"
     },
     {
         "id": 2,
         "type": "water_risk",
-        "classroom": "12",
-        "new_room": "5",
-        "message": "Classroom 12 water leakage detected.",
-        "instructions": "Move all personal belongings and avoid the area until further notice."
+        "severity": "moderate",
+        "classroom": "Salle 12",
+        "new_room": "Salle 5",
+        "message": "Fuite d'eau détectée en Salle 12. Surveillance en cours par le système TANIT.",
+        "instructions": "Déplacez vos affaires personnelles et évitez la zone jusqu'à nouvel ordre.",
+        "timestamp": "Il y a 25 min"
     },
     {
         "id": 3,
         "type": "water_risk",
-        "classroom": "Lab 2",
-        "new_room": "Lab 4",
-        "message": "Lab 2 may experience flooding.",
-        "instructions": "Unplug all devices and transfer experiments to Lab 4 if possible."
+        "severity": "high",
+        "classroom": "Labo 2",
+        "new_room": "Labo 4",
+        "message": "Le Labo 2 risque d'être inondé. Précipitations cumulées à 44% dans la zone.",
+        "instructions": "Débranchez tous les appareils et transférez les expériences au Labo 4 si possible.",
+        "timestamp": "Il y a 38 min"
     },
     {
         "id": 4,
         "type": "water_risk",
-        "classroom": "Auditorium",
-        "new_room": "Lecture Hall 3",
-        "message": "Auditorium water leak detected.",
-        "instructions": "Do not enter the auditorium and move all materials to Lecture Hall 3."
+        "severity": "moderate",
+        "classroom": "Amphithéâtre",
+        "new_room": "Salle de conférence 3",
+        "message": "Fuite d'eau détectée dans l'amphithéâtre. Indice de saturation du sol à 51%.",
+        "instructions": "Ne pas entrer dans l'amphithéâtre et déplacer tout le matériel vers la Salle de conférence 3.",
+        "timestamp": "Il y a 1h"
     }
 ]

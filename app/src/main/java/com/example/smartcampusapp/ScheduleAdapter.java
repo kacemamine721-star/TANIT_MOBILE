@@ -30,10 +30,30 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
         holder.subject.setText(item.getSubject());
         holder.oldTime.setText(item.getOldTime());
         holder.newTime.setText(item.getNewTime());
-        holder.status.setText(item.getStatus());
+        holder.status.setText(item.getStatus().toUpperCase());
 
-        // FIX: This adds the strike-through line via code (safe from crashes)
+        // Strikethrough on old time
         holder.oldTime.setPaintFlags(holder.oldTime.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+
+        // Dynamic status badge colors based on status type
+        String statusLower = item.getStatus().toLowerCase();
+        int textColor;
+        int bgRes;
+
+        if (statusLower.contains("annul")) {
+            textColor = holder.itemView.getContext().getColor(R.color.tanit_red);
+            bgRes = R.drawable.bg_status_red;
+        } else if (statusLower.contains("déloc") || statusLower.contains("deloc")) {
+            textColor = holder.itemView.getContext().getColor(R.color.tanit_teal);
+            bgRes = R.drawable.bg_status_green;
+        } else {
+            // reporté / default
+            textColor = holder.itemView.getContext().getColor(R.color.tanit_amber);
+            bgRes = R.drawable.bg_status_badge;
+        }
+
+        holder.status.setTextColor(textColor);
+        holder.status.setBackgroundResource(bgRes);
     }
 
     @Override

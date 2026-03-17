@@ -1,6 +1,10 @@
 package com.example.smartcampusapp;
 
 import android.os.Bundle;
+import android.content.Intent;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -28,16 +32,20 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Edge-to-edge insets
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            // Only apply top padding to keep the bar below the status bar
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, 0);
             return insets;
         });
+
+        // Request notification permission (Android 13+)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             requestPermissions(new String[]{android.Manifest.permission.POST_NOTIFICATIONS}, 101);
         }
 
+        // Setup RecyclerView
         recyclerView = findViewById(R.id.recyclerViewAlerts);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -46,8 +54,59 @@ public class MainActivity extends AppCompatActivity {
         AlertAdapter adapter = new AlertAdapter(alertList);
         recyclerView.setAdapter(adapter);
 
+        // Update risk summary card
+        updateRiskSummary();
+
+        // Send notifications for all alerts
         for (Alert alert : alertList) {
             sendNotification(alert);
+        }
+
+        // Bottom nav: Alerts tab (active by default)
+        setupBottomNavigation();
+    }
+
+    private void setupBottomNavigation() {
+        LinearLayout navAlerts = findViewById(R.id.navAlerts);
+        LinearLayout navSchedule = findViewById(R.id.navSchedule);
+
+        // Alerts tab is already active (teal color set in XML)
+
+        // Schedule tab click → go to ScheduleActivity
+        if (navSchedule != null) {
+            navSchedule.setOnClickListener(v -> {
+                Intent intent = new Intent(this, ScheduleActivity.class);
+                intent.putExtra("EXTRA_TITLE", "PLANNING ACADÉMIQUE");
+                startActivity(intent);
+            });
+        }
+    }
+
+    private void updateRiskSummary() {
+        TextView riskSubtitle = findViewById(R.id.riskSubtitle);
+        TextView riskLevel = findViewById(R.id.riskLevel);
+
+        if (riskSubtitle != null) {
+            riskSubtitle.setText(alertList.size() + " zones à risque détectées");
+        }
+
+        if (riskLevel != null) {
+            // Count high severity alerts
+            int highCount = 0;
+            for (Alert a : alertList) {
+                if (a.getSeverity() != null && a.getSeverity().equalsIgnoreCase("high")) {
+                    highCount++;
+                }
+            }
+            if (highCount > alertList.size() / 2) {
+                riskLevel.setText("ÉLEVÉ");
+                riskLevel.setTextColor(getColor(R.color.tanit_red));
+                riskLevel.setBackgroundResource(R.drawable.bg_status_red);
+            } else {
+                riskLevel.setText("MODÉRÉ");
+                riskLevel.setTextColor(getColor(R.color.tanit_amber));
+                riskLevel.setBackgroundResource(R.drawable.bg_status_badge);
+            }
         }
     }
 
@@ -66,13 +125,20 @@ public class MainActivity extends AppCompatActivity {
                 JSONObject obj = array.getJSONObject(i);
                 Alert alert = new Alert();
 
-                // FIXED: Use setters instead of direct field access
                 alert.setId(obj.getInt("id"));
                 alert.setType(obj.getString("type"));
                 alert.setClassroom(obj.getString("classroom"));
                 alert.setNew_room(obj.getString("new_room"));
                 alert.setMessage(obj.getString("message"));
                 alert.setInstructions(obj.getString("instructions"));
+
+                // New fields
+                if (obj.has("timestamp")) {
+                    alert.setTimestamp(obj.getString("timestamp"));
+                }
+                if (obj.has("severity")) {
+                    alert.setSeverity(obj.getString("severity"));
+                }
 
                 alertList.add(alert);
             }
@@ -88,19 +154,25 @@ public class MainActivity extends AppCompatActivity {
         String channelId = "alert_channel";
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel(channelId,
-                    "Classroom Alerts", NotificationManager.IMPORTANCE_HIGH);
+                    "Alertes Inondation", NotificationManager.IMPORTANCE_HIGH);
+            channel.setDescription("Alertes de risque d'inondation du campus");
             notificationManager.createNotificationChannel(channel);
         }
 
+        String severity = alert.getSeverity() != null ? alert.getSeverity() : "moderate";
+        String title = severity.equalsIgnoreCase("high")
+                ? "⚠ ALERTE ÉLEVÉE — " + alert.getClassroom()
+                : "⚡ Alerte — " + alert.getClassroom();
+
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channelId)
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
-                .setContentTitle("Classroom Alert")
-                // FIXED: Use getters
-                .setContentText(alert.getMessage() + " Move to: " + alert.getNew_room())
+                .setContentTitle(title)
+                .setContentText(alert.getMessage() + " → " + alert.getNew_room())
+                .setStyle(new NotificationCompat.BigTextStyle()
+                        .bigText(alert.getMessage() + "\n📍 Déplacé vers: " + alert.getNew_room()))
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setAutoCancel(true);
 
-        // FIXED: Use getter for ID
         notificationManager.notify(alert.getId(), builder.build());
     }
 }

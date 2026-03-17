@@ -2,7 +2,7 @@ package com.example.smartcampusapp;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -19,7 +19,7 @@ public class ScheduleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule);
 
-        // 1. Safe Insets handling (Use the content view if header ID is unsure)
+        // Edge-to-edge insets
         View root = findViewById(android.R.id.content);
         ViewCompat.setOnApplyWindowInsetsListener(root, (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -27,30 +27,40 @@ public class ScheduleActivity extends AppCompatActivity {
             return insets;
         });
 
-        // 2. Initialize UI with Null Checks (Prevents crashes if ID is wrong)
+        // Title
         TextView title = findViewById(R.id.detailTitle);
-        Button btnBack = findViewById(R.id.btnBack);
-        RecyclerView rv = findViewById(R.id.recyclerViewSchedule);
-
-        // Set Title
         String zone = getIntent().getStringExtra("EXTRA_TITLE");
         if (title != null) {
             title.setText(zone != null ? zone : "PLANNING");
         }
 
-        // Back Button
+        // Back Button (now ImageButton)
+        ImageButton btnBack = findViewById(R.id.btnBack);
         if (btnBack != null) {
             btnBack.setOnClickListener(v -> finish());
         }
 
-        // 3. Setup RecyclerView
+        // Setup RecyclerView
+        RecyclerView rv = findViewById(R.id.recyclerViewSchedule);
         if (rv != null) {
             rv.setLayoutManager(new LinearLayoutManager(this));
 
             List<ScheduleItem> scheduleList = new ArrayList<>();
-            scheduleList.add(new ScheduleItem("Theorie des langages et automates", "Lun 10:00-12:00-C17", "Mer 10:00-12:00-C17", "reporté"));
-            scheduleList.add(new ScheduleItem("Geotechnical engineering", "Lun 14:00-16:00-C17", "Lun 14:00-16:00-C18", "📍 DÉLOCALISÉ"));
-            scheduleList.add(new ScheduleItem("télédetection", "Lun 08:00-13:00-C17", "ANNULÉ - report TBD", "❌ ANNULÉ"));
+            scheduleList.add(new ScheduleItem(
+                    "Théorie des langages et automates",
+                    "Lun 10:00-12:00 — Salle 17",
+                    "Mer 10:00-12:00 — Salle 17",
+                    "reporté"));
+            scheduleList.add(new ScheduleItem(
+                    "Géotechnique",
+                    "Lun 14:00-16:00 — Salle 17",
+                    "Lun 14:00-16:00 — Salle 18",
+                    "délocalisé"));
+            scheduleList.add(new ScheduleItem(
+                    "Télédétection",
+                    "Lun 08:00-13:00 — Salle 17",
+                    "ANNULÉ — report à confirmer",
+                    "annulé"));
 
             ScheduleAdapter adapter = new ScheduleAdapter(scheduleList);
             rv.setAdapter(adapter);

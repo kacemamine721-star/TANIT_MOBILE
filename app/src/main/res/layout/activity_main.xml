@@ -5,50 +5,205 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0A0E14">
+    android:background="@color/bg_dark">
 
+    <!-- ═══ TOP HEADER BAR ═══ -->
     <RelativeLayout
         android:id="@+id/topBar"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="wrap_content"
         android:paddingHorizontal="20dp"
-        android:background="#0A0E14"
+        android:paddingVertical="16dp"
+        android:background="@color/bg_dark"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/appName"
+        <LinearLayout
+            android:id="@+id/brandGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:text="T A N I T"
-            android:textColor="#FFFFFF"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            android:letterSpacing="0.2" />
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/appName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="T A N I T"
+                android:textColor="@color/text_primary"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.15" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="FLOOD INTELLIGENCE"
+                android:textColor="@color/tanit_teal"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.3" />
+        </LinearLayout>
 
         <TextView
+            android:id="@+id/alertBadge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toEndOf="@id/appName"
-            android:layout_marginStart="20dp"
+            android:layout_alignParentEnd="true"
             android:background="@drawable/bg_alert_badge"
-            android:paddingHorizontal="12dp"
-            android:paddingVertical="4dp"
+            android:paddingHorizontal="14dp"
+            android:paddingVertical="6dp"
             android:text="⚡ ALERTE ACTIVE"
-            android:textColor="#FFFFFF"
-            android:textSize="12sp"
+            android:textColor="@color/tanit_teal"
+            android:textSize="11sp"
             android:textStyle="bold" />
 
     </RelativeLayout>
 
+    <!-- ═══ DIVIDER LINE ═══ -->
+    <View
+        android:id="@+id/headerDivider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/divider"
+        app:layout_constraintTop_toBottomOf="@id/topBar" />
+
+    <!-- ═══ RISK SUMMARY CARD ═══ -->
+    <LinearLayout
+        android:id="@+id/riskSummaryCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/bg_risk_indicator"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:gravity="center_vertical"
+        app:layout_constraintTop_toBottomOf="@id/headerDivider">
+
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/ic_water_drop"
+            android:contentDescription="Flood risk" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginStart="12dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Risque d'inondation — Campus Manouba"
+                android:textColor="@color/text_primary"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/riskSubtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="4 zones à risque détectées"
+                android:textColor="@color/tanit_teal"
+                android:textSize="11sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/riskLevel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="MODÉRÉ"
+            android:textColor="@color/tanit_amber"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:background="@drawable/bg_status_badge"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="4dp" />
+
+    </LinearLayout>
+
+    <!-- ═══ ALERTS LIST ═══ -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewAlerts"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:paddingTop="8dp"
+        android:paddingBottom="8dp"
         android:clipToPadding="false"
-        app:layout_constraintTop_toBottomOf="@id/topBar"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/riskSummaryCard"
+        app:layout_constraintBottom_toTopOf="@id/bottomNav" />
+
+    <!-- ═══ BOTTOM NAVIGATION ═══ -->
+    <LinearLayout
+        android:id="@+id/bottomNav"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:background="@drawable/bg_bottom_nav"
+        android:orientation="horizontal"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <LinearLayout
+            android:id="@+id/navAlerts"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:paddingVertical="8dp">
+
+            <ImageView
+                android:id="@+id/navAlertsIcon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_alerts"
+                app:tint="@color/tanit_teal"
+                android:contentDescription="Alertes" />
+
+            <TextView
+                android:id="@+id/navAlertsLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Alertes"
+                android:textColor="@color/tanit_teal"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:layout_marginTop="2dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/navSchedule"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:paddingVertical="8dp">
+
+            <ImageView
+                android:id="@+id/navScheduleIcon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_schedule"
+                app:tint="@color/text_secondary"
+                android:contentDescription="Planning" />
+
+            <TextView
+                android:id="@+id/navScheduleLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Planning"
+                android:textColor="@color/text_secondary"
+                android:textSize="11sp"
+                android:layout_marginTop="2dp" />
+        </LinearLayout>
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

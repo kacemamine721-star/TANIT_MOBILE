@@ -1,10 +1,31 @@
 <resources>
-    <color name="bg_dark">#0A0E14</color>
-    <color name="card_dark">#121826</color>
-    <color name="tanit_orange">#E65100</color>
-    <color name="tanit_red">#D32F2F</color>
+    <!-- TANIT Flood Intelligence Palette -->
+    <color name="bg_dark">#0A1628</color>
+    <color name="surface_dark">#111D2E</color>
+    <color name="surface_elevated">#162236</color>
+    <color name="divider">#1E3048</color>
+
+    <!-- Primary Accents -->
+    <color name="tanit_teal">#00BFA5</color>
+    <color name="tanit_cyan">#00D4AA</color>
+    <color name="tanit_teal_20">#3300BFA5</color>
+
+    <!-- Semantic Colors -->
+    <color name="tanit_red">#EF5350</color>
+    <color name="tanit_red_bg">#2D1B1B</color>
+    <color name="tanit_amber">#FF9800</color>
+    <color name="tanit_amber_bg">#2D2517</color>
     <color name="tanit_yellow">#FBC02D</color>
-    <color name="tanit_green">#388E3C</color>
-    <color name="text_primary">#FFFFFF</color>
-    <color name="text_secondary">#94A3B8</color>
+    <color name="tanit_green">#66BB6A</color>
+    <color name="tanit_green_bg">#1B2D1C</color>
+
+    <!-- Text -->
+    <color name="text_primary">#E8ECF1</color>
+    <color name="text_secondary">#7B8DB1</color>
+    <color name="text_muted">#4A5B7A</color>
+
+    <!-- Card / Button -->
+    <color name="card_dark">#111D2E</color>
+    <color name="card_stroke">#1E3048</color>
+    <color name="ripple_light">#1AFFFFFF</color>
 </resources>
