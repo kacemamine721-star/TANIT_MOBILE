@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="tanit-192.png" alt="TANIT Logo" width="120"/>
+</p>
+
 # 🌊 TANIT — Flood Intelligence Platform
 
 > **Advanced Android solution for real-time campus flood risk management and proactive safety.**
@@ -117,7 +121,5 @@ Distributed under the MIT License. See `LICENSE` for more information.
 ---
 
 <p align="center">
-  <img src="tanit-192.png" alt="TANIT Logo" width="100"/>
-  <br>
   <i>Empowering Campus Safety through Intelligence.</i>
 </p>
