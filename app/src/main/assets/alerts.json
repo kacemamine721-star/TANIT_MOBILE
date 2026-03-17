@@ -1,0 +1,34 @@
+[
+    {
+        "id": 1,
+        "type": "water_risk",
+        "classroom": "17",
+        "new_room": "9",
+        "message": "Classroom 17 may experience water intrusion.",
+        "instructions": "Please remove electrical devices and move any valuable materials."
+    },
+    {
+        "id": 2,
+        "type": "water_risk",
+        "classroom": "12",
+        "new_room": "5",
+        "message": "Classroom 12 water leakage detected.",
+        "instructions": "Move all personal belongings and avoid the area until further notice."
+    },
+    {
+        "id": 3,
+        "type": "water_risk",
+        "classroom": "Lab 2",
+        "new_room": "Lab 4",
+        "message": "Lab 2 may experience flooding.",
+        "instructions": "Unplug all devices and transfer experiments to Lab 4 if possible."
+    },
+    {
+        "id": 4,
+        "type": "water_risk",
+        "classroom": "Auditorium",
+        "new_room": "Lecture Hall 3",
+        "message": "Auditorium water leak detected.",
+        "instructions": "Do not enter the auditorium and move all materials to Lecture Hall 3."
+    }
+]
